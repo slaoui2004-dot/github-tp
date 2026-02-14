@@ -1,1 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Découvrez le Maroc - Marrakech, Casablanca, Fès</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --gold: #D4AF37;
+            --dark-gold: #B8941E;
+            --red: #C41E3A;
+            --green: #006233;
+            --cream: #F5F1E8;
+            --dark-blue: #1A365D;
+            --light-blue: #E8F4F8;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Palatino', serif;
+            line-height: 1.6;
+            color: #333;
+            background: var(--cream);
+        }
+        
+        /* Motif marocain décoratif */
+        .moroccan-pattern {
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.03) 10px, rgba(212, 175, 55, 0.03) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.03) 10px, rgba(212, 175, 55, 0.03) 20px);
+        }
+        
+        /* Header avec bordure zellige */
+        header {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--green) 100%);
+            color: white;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M50 0 L100 50 L50 100 L0 50 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header-border {
+            height: 8px;
+            background: linear-gradient(90deg, 
+                var(--gold) 0%, var(--gold) 25%, 
+                var(--red) 25%, var(--red) 50%, 
+                var(--green) 50%, var(--green) 75%, 
+                var(--gold) 75%, var(--gold) 100%);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            font-family: 'Palatino', serif;
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            color: var(--cream);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--gold);
+            color: var(--dark-blue);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 3px solid var(--gold);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+        }
+        
+        /* Section des villes */
+        .cities-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            color: var(--dark-blue);
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--red), var(--green));
+        }
+        
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .city-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .city-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        
+        .city-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--red), var(--green));
+        }
+        
+        .city-image {
+            width: 100%;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .marrakech-img {
+            background-image: linear-gradient(rgba(196, 30, 58, 0.3), rgba(196, 30, 58, 0.3)),
+                url('data:image/svg+xml,<svg width="400" height="250" xmlns="http://www.w3.org/2000/svg"><rect fill="%23C41E3A" width="400" height="250"/><text x="200" y="125" font-size="40" fill="white" text-anchor="middle" font-family="Arial">MARRAKECH</text></svg>');
+        }
+        
+        .casablanca-img {
+            background-image: linear-gradient(rgba(26, 54, 93, 0.3), rgba(26, 54, 93, 0.3)),
+                url('data:image/svg+xml,<svg width="400" height="250" xmlns="http://www.w3.org/2000/svg"><rect fill="%231A365D" width="400" height="250"/><text x="200" y="125" font-size="40" fill="white" text-anchor="middle" font-family="Arial">CASABLANCA</text></svg>');
+        }
+        
+        .fes-img {
+            background-image: linear-gradient(rgba(0, 98, 51, 0.3), rgba(0, 98, 51, 0.3)),
+                url('data:image/svg+xml,<svg width="400" height="250" xmlns="http://www.w3.org/2000/svg"><rect fill="%23006233" width="400" height="250"/><text x="200" y="125" font-size="40" fill="white" text-anchor="middle" font-family="Arial">FÈS</text></svg>');
+        }
+        
+        .city-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gold);
+            color: var(--dark-blue);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .city-content {
+            padding: 30px;
+        }
+        
+        .city-title {
+            font-size: 2em;
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+            font-family: 'Palatino', serif;
+        }
+        
+        .city-subtitle {
+            color: var(--gold);
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .city-description {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        
+        .highlights {
+            margin: 20px 0;
+        }
+        
+        .highlights h4 {
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .highlights-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .highlights-list li {
+            padding: 8px 12px;
+            background: var(--light-blue);
+            border-left: 3px solid var(--gold);
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .discover-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--dark-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+            margin-top: 15px;
+        }
+        
+        .discover-btn:hover {
+            background: var(--gold);
+            color: var(--dark-blue);
+            transform: scale(1.05);
+        }
+        
+        /* Section informations pratiques */
+        .info-section {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--green) 100%);
+            color: white;
+            padding: 60px 20px;
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: 60px 60px;
+        }
+        
+        .info-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .info-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .info-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .info-card h3 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .info-card p {
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: white;
+            padding: 40px 20px 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding-top: 20px;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .city-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .city-card:nth-child(1) { animation-delay: 0.1s; }
+        .city-card:nth-child(2) { animation-delay: 0.2s; }
+        .city-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .cities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .highlights-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="moroccan-pattern">
+    <header>
+        <div class="header-pattern"></div>
+        <div class="header-border"></div>
+        <div class="header-content">
+            <nav>
+                <div class="logo">🕌 MAROC Tourisme</div>
+                <ul class="nav-links">
+                    <li><a href="#villes">Nos Villes</a></li>
+                    <li><a href="#infos">Infos Pratiques</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="hero">
+                <h1>Découvrez la Magie du Maroc</h1>
+                <p>Un voyage à travers trois perles du Royaume : Marrakech, Casablanca et Fès</p>
+                <a href="#villes" class="cta-button">Explorez Nos Destinations</a>
+            </div>
+        </div>
+    </header>
 
+    <section class="cities-section" id="villes">
+        <h2 class="section-title">Nos Destinations Phares</h2>
+        
+        <div class="cities-grid">
+            <!-- Marrakech -->
+            <div class="city-card">
+                <div class="city-image marrakech-img">
+                    <span class="city-badge">La Perle du Sud</span>
+                </div>
+                <div class="city-content">
+                    <h3 class="city-title">Marrakech</h3>
+                    <p class="city-subtitle">La Ville Rouge</p>
+                    <p class="city-description">
+                        Plongez dans l'atmosphère envoûtante de Marrakech, où les souks colorés, 
+                        la mythique place Jemaa el-Fna et les jardins luxuriants vous transportent 
+                        dans un conte des mille et une nuits. Entre tradition et modernité, 
+                        la ville ocre offre une expérience inoubliable.
+                    </p>
+                    
+                    <div class="highlights">
+                        <h4>⭐ À Ne Pas Manquer</h4>
+                        <ul class="highlights-list">
+                            <li>🕌 Jardin Majorelle</li>
+                            <li>🏰 Palais Bahia</li>
+                            <li>🛍️ Souks traditionnels</li>
+                            <li>🌙 Place Jemaa el-Fna</li>
+                            <li>🏛️ Koutoubia</li>
+                            <li>🌿 Jardins Menara</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="#" class="discover-btn">Découvrir Marrakech →</a>
+                </div>
+            </div>
+
+            <!-- Casablanca -->
+            <div class="city-card">
+                <div class="city-image casablanca-img">
+                    <span class="city-badge">Capitale Économique</span>
+                </div>
+                <div class="city-content">
+                    <h3 class="city-title">Casablanca</h3>
+                    <p class="city-subtitle">La Ville Blanche</p>
+                    <p class="city-description">
+                        Casablanca, poumon économique du Maroc, allie l'élégance de son architecture 
+                        Art Déco au dynamisme d'une métropole moderne. La majestueuse Mosquée Hassan II, 
+                        la Corniche et le quartier des Habous témoignent de la richesse culturelle 
+                        de cette ville tournée vers l'océan.
+                    </p>
+                    
+                    <div class="highlights">
+                        <h4>⭐ À Ne Pas Manquer</h4>
+                        <ul class="highlights-list">
+                            <li>🕌 Mosquée Hassan II</li>
+                            <li>🌊 La Corniche</li>
+                            <li>🏛️ Quartier Habous</li>
+                            <li>🏪 Morocco Mall</li>
+                            <li>🎭 Place Mohammed V</li>
+                            <li>🏖️ Plages d'Ain Diab</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="#" class="discover-btn">Découvrir Casablanca →</a>
+                </div>
+            </div>
+
+            <!-- Fès -->
+            <div class="city-card">
+                <div class="city-image fes-img">
+                    <span class="city-badge">Capitale Spirituelle</span>
+                </div>
+                <div class="city-content">
+                    <h3 class="city-title">Fès</h3>
+                    <p class="city-subtitle">La Gardienne de l'Âme Marocaine</p>
+                    <p class="city-description">
+                        Fès, la plus ancienne des villes impériales, est un véritable musée à ciel ouvert. 
+                        Sa médina médiévale, classée au patrimoine mondial de l'UNESCO, ses medersas 
+                        somptueuses et ses tanneries ancestrales offrent un voyage authentique dans 
+                        le temps et la tradition marocaine.
+                    </p>
+                    
+                    <div class="highlights">
+                        <h4>⭐ À Ne Pas Manquer</h4>
+                        <ul class="highlights-list">
+                            <li>🏛️ Médina de Fès el-Bali</li>
+                            <li>🎓 Université Al Quaraouiyine</li>
+                            <li>🏰 Palais Royal</li>
+                            <li>🎨 Tanneries Chouara</li>
+                            <li>📿 Medersa Bou Inania</li>
+                            <li>🗝️ Bab Boujloud</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="#" class="discover-btn">Découvrir Fès →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section" id="infos">
+        <div class="info-content">
+            <h2 class="section-title" style="color: white;">Informations Pratiques</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">✈️</div>
+                    <h3>Comment Venir</h3>
+                    <p>Vols directs depuis l'Europe, connexions internationales via Casablanca et Marrakech. Aéroports modernes et bien desservis.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">🌡️</div>
+                    <h3>Meilleure Période</h3>
+                    <p>Mars-Mai et Septembre-Novembre : températures agréables. Évitez juillet-août pour la chaleur intense.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">💰</div>
+                    <h3>Monnaie</h3>
+                    <p>Dirham marocain (MAD). Change facile dans les aéroports et banques. Cartes acceptées dans les grandes villes.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">🗣️</div>
+                    <h3>Langues</h3>
+                    <p>Arabe et Berbère (officielles), Français largement parlé. Anglais dans les zones touristiques.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">À Propos</a>
+                <a href="#">Destinations</a>
+                <a href="#">Circuits</a>
+                <a href="#">Blog</a>
+                <a href="#">Contact</a>
+                <a href="#">FAQ</a>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 Maroc Tourisme - Découvrez l'authenticité du Royaume. Tous droits réservés.</p>
+                <p style="margin-top: 10px;">🇲🇦 Créé avec passion pour promouvoir le patrimoine marocain</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling pour les liens d'ancrage
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.city-card, .info-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
