@@ -1,217 +1,127 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Maroc Tourisme</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Maroc Tourisme</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --gold: #D4AF37;
-            --dark-blue: #1A365D;
-            --green: #006233;
-            --cream: #F5F1E8;
-        }
-
-        body {
-            font-family: Georgia, serif;
-            background: var(--cream);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--dark-blue), var(--green));
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .hero h1 {
-            font-size: 2.8em;
-            margin-bottom: 20px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: var(--gold);
-            color: var(--dark-blue);
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-        }
-
-        .cities-section {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.2em;
-            margin-bottom: 40px;
-            color: var(--dark-blue);
-        }
-
-        .cities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .city-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            padding: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .city-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .city-title {
-            font-size: 1.6em;
-            color: var(--dark-blue);
-            margin-bottom: 5px;
-        }
-
-        .city-subtitle {
-            color: var(--gold);
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-
-        .city-description {
-            margin-bottom: 10px;
-            color: #555;
-        }
-
-        .highlights-list {
-            list-style: none;
-        }
-
-        .highlights-list li {
-            margin-bottom: 5px;
-        }
-
-        footer {
-            background: var(--dark-blue);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 60px;
-        }
-
-        .loader {
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: var(--dark-blue);
-        }
-
-        .error {
-            color: red;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
+<style>
+body { font-family: Arial; margin:0; background:#F5F1E8; }
+header { background:#1A365D; color:white; padding:40px; text-align:center; }
+h1 { margin-bottom:20px; }
+section { max-width:1000px; margin:40px auto; padding:20px; }
+.city-card { background:white; padding:20px; margin-bottom:20px; border-radius:10px; }
+button { padding:10px; background:#D4AF37; border:none; font-weight:bold; }
+input, select { width:100%; padding:8px; margin-bottom:10px; }
+.success { color:green; }
+.error { color:red; }
+</style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">🕌 MAROC Tourisme</div>
-    <div class="hero">
-        <h1 id="main-title">Chargement...</h1>
-        <a href="#villes" class="cta-button">Explorez Nos Destinations</a>
-    </div>
+<h1 id="main-title">Chargement...</h1>
 </header>
 
-<section class="cities-section" id="villes">
-    <h2 class="section-title">Nos Destinations Phares</h2>
-
-    <div id="loader" class="loader">Chargement des villes...</div>
-
-    <div class="cities-grid" id="cities-container"></div>
-
-    <div id="error-message" class="error"></div>
+<section>
+<h2>Nos Destinations</h2>
+<div id="cities-container"></div>
 </section>
 
-<footer>
-    <p>&copy; 2026 Maroc Tourisme - Tous droits réservés</p>
-</footer>
+<section>
+<h2>Réserver votre destination</h2>
+
+<form id="reservation-form">
+<input type="text" id="nom" placeholder="Nom" required>
+<input type="text" id="prenom" placeholder="Prénom" required>
+<input type="tel" id="telephone" placeholder="Téléphone" required>
+
+<select id="ville" required>
+<option value="">Choisir une ville</option>
+<option value="Casablanca">Casablanca</option>
+<option value="Tanger">Tanger</option>
+<option value="Fès">Fès</option>
+<option value="Marrakech">Marrakech</option>
+</select>
+
+<button type="submit">Envoyer</button>
+</form>
+
+<p id="form-message"></p>
+</section>
 
 <script>
 const API_BASE = "https://maroctourisme-back-g6hghbb8fgaxcpbb.newzealandnorth-01.azurewebsites.net";
 
-// Charger le titre
+// Charger titre
 async function loadTitle() {
-    try {
-        const response = await fetch(`${API_BASE}/api/title`);
-        if (!response.ok) throw new Error("Erreur API titre");
-
-        const data = await response.json();
-        document.getElementById("main-title").textContent = data.title;
-    } catch (error) {
-        document.getElementById("main-title").textContent = "Bienvenue au Maroc";
-        console.error(error);
-    }
+  const res = await fetch(`${API_BASE}/api/title`);
+  const data = await res.json();
+  document.getElementById("main-title").textContent = data.title;
 }
 
-// Charger les villes
+// Charger villes
 async function loadCities() {
-    const loader = document.getElementById("loader");
-    const errorMessage = document.getElementById("error-message");
-    const container = document.getElementById("cities-container");
+  const res = await fetch(`${API_BASE}/api/cities`);
+  const cities = await res.json();
+  const container = document.getElementById("cities-container");
+  container.innerHTML = "";
 
-    try {
-        const response = await fetch(`${API_BASE}/api/cities`);
-        if (!response.ok) throw new Error("Erreur API villes");
-
-        const cities = await response.json();
-
-        loader.style.display = "none";
-        container.innerHTML = "";
-
-        cities.forEach(city => {
-            const card = document.createElement("div");
-            card.className = "city-card";
-
-            card.innerHTML = `
-                <h3 class="city-title">${city.name}</h3>
-                <p class="city-subtitle">${city.subtitle}</p>
-                ${city.description ? `<p class="city-description">${city.description}</p>` : ""}
-                <ul class="highlights-list">
-                    ${city.highlights.map(h => `<li>• ${h}</li>`).join("")}
-                </ul>
-            `;
-
-            container.appendChild(card);
-        });
-
-    } catch (error) {
-        loader.style.display = "none";
-        errorMessage.textContent = "Impossible de charger les villes.";
-        console.error(error);
-    }
+  cities.forEach(city => {
+    const div = document.createElement("div");
+    div.className = "city-card";
+    div.innerHTML = `
+      <h3>${city.name}</h3>
+      <p><em>${city.subtitle}</em></p>
+      ${city.description ? `<p>${city.description}</p>` : ""}
+      <ul>
+        ${city.highlights.map(h => `<li>${h}</li>`).join("")}
+      </ul>
+    `;
+    container.appendChild(div);
+  });
 }
 
-// Init
+// POST réservation
+document.getElementById("reservation-form")
+.addEventListener("submit", async function(e) {
+
+  e.preventDefault();
+
+  const nom = document.getElementById("nom").value;
+  const prenom = document.getElementById("prenom").value;
+  const telephone = document.getElementById("telephone").value;
+  const ville = document.getElementById("ville").value;
+
+  const message = document.getElementById("form-message");
+
+  try {
+    const res = await fetch(`${API_BASE}/api/reservations`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nom, prenom, telephone, ville })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error);
+
+    message.className = "success";
+    message.textContent = "Réservation envoyée avec succès !";
+
+    document.getElementById("reservation-form").reset();
+
+  } catch (err) {
+    message.className = "error";
+    message.textContent = err.message;
+  }
+});
+
+// Initialisation
 document.addEventListener("DOMContentLoaded", () => {
-    loadTitle();
-    loadCities();
+  loadTitle();
+  loadCities();
 });
 </script>
 
